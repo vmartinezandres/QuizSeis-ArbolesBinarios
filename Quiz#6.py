@@ -10,7 +10,7 @@ class ArbolBinario:
         self.root = None
         self.tail = None
 
-    def agregarNodo(self, value):
+    def AgregarNodo(self, value):
         if self.root == None:
             self.root = Nodo(value)
         else:
@@ -33,7 +33,7 @@ class ArbolBinario:
                     else:
                         father = father.right
                         
-    def encontrarNodo(self, first, value):
+    def EncontrarNodo(self, first, value):
         if first != None:
             nodo = first
             while value != nodo.value:
@@ -56,14 +56,14 @@ class ArbolBinario:
         else:
             return None
 
-    def encontrarPenultimoNodo(self, first, value):
+    def EncontrarPenultimoNodo(self, first, value):
             if first.value != value and first != None:
                 nodo = first
-                penultimoNodo = nodo
+                PenultimoNodo = nodo
                 while value != nodo.value:
                     if value < nodo.value:
                         if nodo.left != None:
-                            penultimoNodo = nodo
+                            PenultimoNodo = nodo
                             nodo = nodo.left
                         
                         else:
@@ -71,18 +71,18 @@ class ArbolBinario:
                         
                     else:
                         if nodo.right != None:
-                            penultimoNodo = nodo
+                            PenultimoNodo = nodo
                             nodo = nodo.right
 
                         else:
                             return None
 
-                return penultimoNodo
+                return PenultimoNodo
             
             else:
                 return None
         
-    def buscarMin(self, first):
+    def BuscarMin(self, first):
         if first != None:
             while first.left != None:
                 first = first.left
@@ -93,7 +93,7 @@ class ArbolBinario:
             return None
 
 
-    def buscarMax(self, first):
+    def BuscarMax(self, first):
         if first != None:
             while first.right != None:
                 first = first.right
@@ -104,53 +104,53 @@ class ArbolBinario:
             return None
 
 
-    def eliminar(self, first, value):
+    def Eliminar(self, first, value):
         if first != None:
-            nodo = self.encontrarNodo(first, value)
+            nodo = self.EncontrarNodo(first, value)
             if nodo != None:
                 if nodo.left == None and nodo.right == None:
-                    penultimoNodo = self.encontrarPenultimoNodo(first, nodo.value)              
+                    PenultimoNodo = self.EncontrarPenultimoNodo(first, nodo.value)              
 
-                    if penultimoNodo.left != None and penultimoNodo.left.value == nodo.value:
-                        penultimoNodo.left = None
+                    if PenultimoNodo.left != None and PenultimoNodo.left.value == nodo.value:
+                        PenultimoNodo.left = None
                     else:
-                        penultimoNodo.right = None
+                        PenultimoNodo.right = None
                 
                 else:
                     if nodo.left != None:
-                        nodoRemplazo = self.buscarMax(nodo.left)
+                        NodoRemplazo = self.BuscarMax(nodo.left)
 
-                        nodo.value = nodoRemplazo.value
+                        nodo.value = NodoRemplazo.value
 
-                        if nodo.left.value == nodoRemplazo.value:
-                            if nodoRemplazo.left != None:
-                                nodo.left = nodoRemplazo.left
+                        if nodo.left.value == NodoRemplazo.value:
+                            if NodoRemplazo.left != None:
+                                nodo.left = NodoRemplazo.left
                             else:
                                 nodo.left = None 
                         
                         else:
-                            eliminar(nodo.left, nodoRemplazo.value)
+                            self.Eliminar(nodo.left, NodoRemplazo.value)
 
                     else:
-                        nodoRemplazo = self.buscarMin(nodo.right)
-                        nodo.value = nodoRemplazo.value
-                        if nodo.right.value == nodoRemplazo.value:
-                            if nodoRemplazo.right != None:
-                                nodo.right = nodoRemplazo.right      
+                        NodoRemplazo = self.BuscarMin(nodo.right)
+                        nodo.value = NodoRemplazo.value
+                        if nodo.right.value == NodoRemplazo.value:
+                            if NodoRemplazo.right != None:
+                                nodo.right = NodoRemplazo.right      
                             else:
                                 nodo.right = None
 
                         else:
-                            eliminar(nodo.right, nodoRemplazo.value)                       
+                            self.Eliminar(nodo.right, NodoRemplazo.value)                       
 
-    def imprimirInOrden(self, first):
+    def ImprimirInOrden(self, first):
         if first != None:
-            self.imprimirInOrden(first.left)
+            self.ImprimirInOrden(first.left)
             print(first.value)
-            self.imprimirInOrden(first.right)
+            self.ImprimirInOrden(first.right)
             
 
-    def imprimirPreOrden(self, first):
+    def ImprimirPreOrden(self, first):
         if first != None:
             nodo = first
             while nodo.left != None: # Mientras tenga hijo izquierdo
@@ -171,25 +171,25 @@ class ArbolBinario:
                 if self.tail != None and nodo.value == self.tail.value:
                     self.tail = None  
                 nodo = nodo.right
-                self.imprimirPreOrden(nodo)
+                self.ImprimirPreOrden(nodo)
                 
             else: # si llega al final a una hoja
                 if self.tail != None: # si tail existe
                     if nodo.value != self.tail.value: 
-                        nodoTail = self.tail
+                        NodoTail = self.tail
                         if self.tail.prev != None:
                             self.tail = self.tail.prev
-                            nodoTail.prev = None
+                            NodoTail.prev = None
                         
-                        self.imprimirPreOrden(nodoTail); 
+                        self.ImprimirPreOrden(NodoTail); 
                        
                     else:
                         self.tail = None
                         
 
-    def imprimirPostOrden(self, first):
-        if (first != None):
-            self.imprimirPostOrden(first.left)
-            self.imprimirPostOrden(first.right)
+    def ImprimirPostOrden(self, first):
+        if first != None:
+            self.ImprimirPostOrden(first.left)
+            self.ImprimirPostOrden(first.right)
             print(first.value)
     
